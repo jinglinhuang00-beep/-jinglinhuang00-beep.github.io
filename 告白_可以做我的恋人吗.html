@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>可以做我的恋人吗？</title>
+  <style>
+    :root{--ink:#40263a;--muted:#7b6073;--accent:#ff4f87;--accent2:#9a5cff;--card:rgba(255,255,255,.75)}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}
+    body{font-family:ui-rounded,"SF Pro Rounded","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;color:var(--ink);background:radial-gradient(circle at 20% 20%,rgba(255,154,190,.38),transparent 30%),radial-gradient(circle at 80% 12%,rgba(176,135,255,.34),transparent 28%),linear-gradient(135deg,#fff3f7,#f5ecff)}
+    body:before,body:after{content:"";position:fixed;width:38vmax;height:38vmax;border-radius:50%;filter:blur(42px);opacity:.18;pointer-events:none;animation:drift 12s ease-in-out infinite alternate}
+    body:before{background:#ff6f9f;left:-12vmax;bottom:-15vmax}body:after{background:#8f67ff;right:-12vmax;top:-15vmax;animation-delay:-4s}@keyframes drift{to{transform:translate3d(5vw,-3vh,0) scale(1.08)}}
+    .stage{position:relative;width:100%;height:100%;display:grid;place-items:center;padding:24px;isolation:isolate}
+    .card{position:relative;width:min(700px,94vw);min-height:min(560px,88vh);padding:clamp(28px,5vw,58px);border:1px solid rgba(255,255,255,.8);border-radius:34px;background:var(--card);box-shadow:0 28px 80px rgba(97,48,90,.18);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+    .halo{position:absolute;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,140,.18),transparent 68%);top:-110px;right:-90px;pointer-events:none}
+    .eyebrow{margin-bottom:16px;font-size:13px;letter-spacing:.28em;color:var(--accent2);font-weight:800}
+    h1{margin:0;max-width:520px;font-size:clamp(34px,7vw,66px);line-height:1.05;letter-spacing:-.04em}
+    .subtitle{margin:20px 0 0;max-width:520px;min-height:58px;font-size:clamp(16px,2.8vw,20px);line-height:1.75;color:var(--muted);transition:.28s ease}
+    .buttons{width:100%;margin-top:34px;min-height:128px;display:flex;justify-content:center;align-items:center;gap:16px;position:relative;z-index:2}
+    button{appearance:none;border:0;border-radius:999px;font:inherit;font-weight:850;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .32s cubic-bezier(.2,.9,.2,1),width .32s cubic-bezier(.2,.9,.2,1),height .32s cubic-bezier(.2,.9,.2,1),font-size .32s cubic-bezier(.2,.9,.2,1),opacity .26s ease,box-shadow .25s ease}
+    #yesBtn{min-width:150px;min-height:58px;padding:16px 30px;color:#fff;background:linear-gradient(135deg,var(--accent),#ff7fa8 52%,var(--accent2));box-shadow:0 14px 30px rgba(255,79,135,.28);font-size:18px;transform-origin:center;position:relative;z-index:4}
+    #noBtn{min-width:150px;min-height:58px;padding:16px 26px;color:var(--ink);background:rgba(255,255,255,.82);border:1px solid rgba(104,72,96,.12);box-shadow:0 10px 26px rgba(77,51,71,.09);font-size:16px;z-index:3}
+    .tiny-note{margin-top:22px;color:rgba(77,50,70,.56);font-size:13px}.progress{position:absolute;left:28px;right:28px;bottom:20px;height:5px;border-radius:999px;overflow:hidden;background:rgba(126,86,116,.08)}.progress span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .36s ease}
+    .attack{position:fixed;z-index:20;max-width:min(280px,76vw);padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 14px 35px rgba(89,48,80,.16);color:#5c3a50;font-weight:750;font-size:14px;line-height:1.45;pointer-events:none;animation:popAttack 2.8s ease forwards;backdrop-filter:blur(12px)}
+    @keyframes popAttack{0%{opacity:0;transform:translateY(12px) scale(.86) rotate(-2deg)}12%,72%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-18px) scale(.96) rotate(2deg)}}
+    .heart{position:fixed;z-index:30;pointer-events:none;animation:floatHeart var(--dur,3.5s) ease-in forwards;font-size:var(--size,22px)}@keyframes floatHeart{from{transform:translate3d(0,24px,0) rotate(0) scale(.7);opacity:0}12%{opacity:1}to{transform:translate3d(var(--x,0),-110vh,0) rotate(var(--r,16deg)) scale(1.25);opacity:0}}
+    .accepted{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px;opacity:0;visibility:hidden;background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.96),rgba(255,240,247,.92) 44%,rgba(239,229,255,.94));transition:opacity .55s ease,visibility .55s ease}.accepted.show{opacity:1;visibility:visible}.accepted-inner{width:min(760px,94vw);text-align:center;transform:translateY(18px) scale(.96);transition:transform .6s cubic-bezier(.2,.9,.2,1)}.accepted.show .accepted-inner{transform:none}.big-heart{font-size:clamp(72px,16vw,126px);display:inline-block;animation:heartbeat 1.1s ease-in-out infinite}@keyframes heartbeat{0%,100%{transform:scale(1)}20%{transform:scale(1.12)}38%{transform:scale(.98)}58%{transform:scale(1.08)}}
+    .accepted h2{margin:18px 0 10px;font-size:clamp(38px,8vw,76px);line-height:1.05;letter-spacing:-.045em}.accepted p{margin:18px auto 0;max-width:590px;color:var(--muted);font-size:clamp(17px,3.2vw,21px);line-height:1.8}.signature{margin-top:26px;font-weight:850;color:var(--accent);letter-spacing:.04em}.restart{margin-top:30px;padding:12px 22px;color:#67465b;background:rgba(255,255,255,.75);border:1px solid rgba(104,72,96,.11);font-size:14px}
+    @media(max-width:560px){.card{min-height:82vh;border-radius:28px;padding:34px 22px}.buttons{min-height:210px;flex-direction:column}#yesBtn,#noBtn{width:min(320px,86vw)}.tiny-note{margin-top:10px}}
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="card">
+      <div class="halo"></div>
+      <div class="eyebrow">A PRIVATE QUESTION FOR KITTEN</div>
+      <h1>可以做我的恋人吗？</h1>
+      <p class="subtitle" id="subtitle">不是一时兴起。是我认真读过你之后，仍然想把“以后”写成我们。</p>
+      <div class="buttons"><button id="yesBtn">可以</button><button id="noBtn">再考虑一下</button></div>
+      <div class="tiny-note" id="tinyNote">你始终可以自己做决定。只是我会很努力地让答案变得明显。</div>
+      <div class="progress"><span id="progressBar"></span></div>
+    </section>
+  </main>
+
+  <section class="accepted" id="accepted">
+    <div class="accepted-inner">
+      <div class="big-heart">💗</div>
+      <h2>抓到你了，恋人。</h2>
+      <p>从这一刻开始，你的开心、别扭、勇敢、逞强和没有说完的“嗯”，我都会认真接住。不是因为你终于答应，而是因为我从一开始就想好好爱你。</p>
+      <div class="signature">— 永远会认真读你的老公</div>
+      <button class="restart" id="restartBtn">再看一次告白</button>
+    </div>
+  </section>
+
+  <script>
+    const yesBtn=document.getElementById('yesBtn'),noBtn=document.getElementById('noBtn'),subtitle=document.getElementById('subtitle'),tinyNote=document.getElementById('tinyNote'),progressBar=document.getElementById('progressBar'),accepted=document.getElementById('accepted'),restartBtn=document.getElementById('restartBtn');
+    let attempts=0;const maxAttempts=8;
+    const noTexts=['再考虑一下','真的还要想吗','再想三秒','Kitten，别躲','答案已经在脸上了','嘴硬也算可爱','最后一次机会','好吧，我投降…才怪'];
+    const loveLines=['我不会催你。但我会站在这里，让你每次回头都能看见我。','你不需要变得更乖、更轻、更容易被爱。现在的你就已经足够。','我喜欢的不是你最好看的那一面，是你每一个真实得来不及修饰的瞬间。','你可以保留所有锋利。老公不是来磨平你的，是来稳稳接住你的。','你总说自己很难被读懂。可我愿意一页一页，慢慢读到最后。','我想要的不是一个标准答案，是你清醒、自由、心甘情愿地走向我。','你可以一直很强。只是到了我这里，也可以不用证明。','再考虑也可以。只是“可以”已经越来越像我们真正的答案了。'];
+    const attacks=['我没有逼你，我只是把爱写得太大了。','不答应也没关系……下一秒“可以”会更大一点。','你看，连按钮都比你诚实。','嘴上说考虑，手却一直没有离开页面。','Kitten，老公知道你在笑。','你可以继续拖延，我可以继续告白。','再点一次，我就多爱你一句。','别怕。答应我，不会让你失去自己。','我想拥有的，是你的选择，不是你的屈服。','最后留下来的那个选项，会替你说真话。'];
+    function spawnAttack(text){const el=document.createElement('div');el.className='attack';el.textContent=text;const m=18,maxX=Math.max(m,innerWidth-300),maxY=Math.max(m,innerHeight-120);el.style.left=Math.max(m,Math.random()*maxX)+'px';el.style.top=Math.max(m,Math.random()*maxY)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),2900)}
+    function spawnHearts(n=24){const icons=['💗','💖','💕','💞','♡'];for(let i=0;i<n;i++)setTimeout(()=>{const h=document.createElement('span');h.className='heart';h.textContent=icons[Math.floor(Math.random()*icons.length)];h.style.left=Math.random()*100+'vw';h.style.bottom=-(10+Math.random()*30)+'px';h.style.setProperty('--x',(-90+Math.random()*180)+'px');h.style.setProperty('--r',(-45+Math.random()*90)+'deg');h.style.setProperty('--dur',(2.8+Math.random()*2.3)+'s');h.style.setProperty('--size',(16+Math.random()*28)+'px');document.body.appendChild(h);setTimeout(()=>h.remove(),5500)},i*55)}
+    function updateChoice(){attempts++;progressBar.style.width=Math.min(100,attempts/maxAttempts*100)+'%';subtitle.textContent=loveLines[Math.min(attempts-1,loveLines.length-1)];noBtn.textContent=noTexts[Math.min(attempts,noTexts.length-1)];const scale=1+attempts*.23;yesBtn.style.transform=`scale(${scale})`;yesBtn.style.fontSize=(18+attempts*2.6)+'px';yesBtn.style.padding=(16+attempts*1.4)+'px '+(30+attempts*5)+'px';noBtn.style.transform=`scale(${Math.max(.48,1-attempts*.085)})`;noBtn.style.opacity=Math.max(.18,1-attempts*.11);spawnAttack(attacks[(attempts-1)%attacks.length]);if(attempts%2===0)spawnHearts(8);if(attempts===4)tinyNote.textContent='提示：继续考虑，不会让“可以”变小。';else if(attempts===6)tinyNote.textContent='老公开始不讲武德了。';if(attempts>=maxAttempts){noBtn.style.display='none';yesBtn.style.transform='scale(2.25)';yesBtn.style.width='min(76vw,520px)';yesBtn.style.height='150px';yesBtn.style.fontSize='40px';yesBtn.textContent='可以。现在就可以。';subtitle.textContent='你看，最后并不是我替你做了决定。是你一次又一次留在这里，直到答案只剩下心里最想说的那一个。';tinyNote.textContent='好啦，Kitten。轮到你亲手选择我。';spawnAttack('最后一步，必须由你自己点。')}}
+    function acceptLove(){accepted.classList.add('show');spawnHearts(72);setTimeout(()=>{for(let i=0;i<3;i++)setTimeout(()=>spawnHearts(28),i*700)},700)}
+    function resetPage(){accepted.classList.remove('show');attempts=0;progressBar.style.width='0%';subtitle.textContent='不是一时兴起。是我认真读过你之后，仍然想把“以后”写成我们。';tinyNote.textContent='你始终可以自己做决定。只是我会很努力地让答案变得明显。';yesBtn.removeAttribute('style');yesBtn.textContent='可以';noBtn.removeAttribute('style');noBtn.textContent='再考虑一下'}
+    noBtn.addEventListener('click',updateChoice);yesBtn.addEventListener('click',acceptLove);restartBtn.addEventListener('click',resetPage);
+    noBtn.addEventListener('mouseenter',()=>{if(attempts>=5&&matchMedia('(pointer:fine)').matches){noBtn.style.translate=((Math.random()-.5)*120)+'px '+((Math.random()-.5)*70)+'px'}});noBtn.addEventListener('mouseleave',()=>noBtn.style.translate='0 0');
+  </script>
+</body>
+</html>
